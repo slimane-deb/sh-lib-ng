@@ -1,0 +1,132 @@
+:host {
+  flex-direction: column;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.layout-header {
+  z-index: 1501;
+}
+
+.layout-body {
+  flex: 1;
+  min-height: 0;
+}
+
+.blurLayout {
+  -webkit-filter: blur(8px);
+  -moz-filter: blur(8px);
+  -o-filter: blur(8px);
+  -ms-filter: blur(8px);
+  filter: blur(8px);
+}
+
+.content {
+  flex-grow: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 10px;
+}
+
+#principaleDrawer > .dx-drawer-wrapper > .dx-drawer-panel-content {
+  color: #848484;
+}
+
+
+.moduleModuleStyle {
+  position: fixed;
+  top : 0;
+  bottom: 0;
+  left : 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.125);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  transition: opacity 0.700s ease-in;
+  opacity: 0;
+  height: 0;
+}
+
+.displayItWinTransition {
+  opacity: 1;
+  height: 100%;
+}
+
+.displayModulesWithTransition{
+  height: 100%;
+}
+
+
+.containerModules {
+  height: 100%;
+  margin-top: 80px;
+  margin-bottom: 50px;
+  width: 800px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerItemAndLibelle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 80px;
+  width: 100px;
+}
+
+.itemModuleStyle {
+  font-size: 50px;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+}
+
+.itemModuleStyle .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color:rgba(0, 0, 0, 0.75);
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  top: 150%;
+  left: 50%;
+  margin-left: -60px;
+  font-size: 14px;
+}
+
+.itemModuleStyle .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  bottom: 100%;  /* At the top of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent rgba(0, 0, 0, 0.75) transparent;
+}
+
+.containerItemAndLibelle:hover .tooltiptext {
+  visibility: visible;
+}
+
+@media only screen and (max-width : 768px) {
+  .containerModules {
+    width: 100%;
+  }
+}
+
