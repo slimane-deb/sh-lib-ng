@@ -29,6 +29,11 @@ const routes: Routes = [
     canActivate: [ AuthGuardService ]
   },
   {
+    path: 'report',
+    loadChildren: () => import('./core/report/report.module').then(m => m.ReportModule)
+  },
+  // Other modules
+  {
     path: '**',
     redirectTo: 'home',
     canActivate: [ AuthGuardService ]

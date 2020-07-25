@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModule, Input, ViewChild } from '@angular/core';
+import {Component, OnInit, NgModule, Input, ViewChild, OnDestroy} from '@angular/core';
 import {SideNavigationMenuModule, HeaderModule, HeaderComponent} from '../../shared/components';
 import { ScreenService } from '../../shared/services';
 import { DxDrawerModule } from 'devextreme-angular/ui/drawer';
@@ -7,14 +7,14 @@ import { CommonModule } from '@angular/common';
 
 import { Router, NavigationEnd } from '@angular/router';
 import {MenuService} from '../../common/services/menu.service';
-import {MenuType} from '../../types/menu-type';
+import {MenuType} from '../../common/types/menu-type';
 
 @Component({
   selector: 'app-side-nav-outer-toolbar',
   templateUrl: './side-nav-outer-toolbar.component.html',
   styleUrls: ['./side-nav-outer-toolbar.component.scss']
 })
-export class SideNavOuterToolbarComponent implements OnInit {
+export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   @ViewChild(DxScrollViewComponent, { static: true }) scrollView: DxScrollViewComponent;
   selectedRoute = '';
   @ViewChild('AppHeader', {static: true})
@@ -50,7 +50,7 @@ export class SideNavOuterToolbarComponent implements OnInit {
 
     this.menuService.getListMenu().subscribe(
       response => {
-        this.fillMenuItems(response as any[]);
+        this.fillMenuItems(response);
       }
       ,
       error => {
@@ -61,20 +61,17 @@ export class SideNavOuterToolbarComponent implements OnInit {
 
     this.updateDrawer();
   }
-  fillMenuItems(menus: any[]) {
-    this.left = []; this.topLeft = [];
+  fillMenuItems(menus) {
+    this.left = [];
+    this.topLeft = [];
     this.allMenus = [...menus];
-    for (let i = 0; i < menus.length; i++) {
-      switch (menus[i].menuType) {
+    for (let i of menus) {
+      switch (i.menuType) {
         case MenuType.TOP_LEFT:
-          this.topLeft.push(menus[i]);
-          menus.splice(i, 1);
-          i--;
+          this.topLeft.push(i);
           break;
         case MenuType.LEFT:
-          this.left.push(menus[i]);
-          menus.splice(i, 1);
-          i--;
+          this.left.push(i);
           break;
 
       }
@@ -82,10 +79,10 @@ export class SideNavOuterToolbarComponent implements OnInit {
     this.sortMenu(this.topLeft);
     this.sortMenu(this.left);
 
-    // Header Mein Menu
+    // Header Main Menu
     this.header.setMenu(this.topLeft);
     // Main Left Menu Items
-    this.menuItems = [...this.left];
+    this.menuItems = JSON.parse(localStorage.getItem('lastSelMenu'));
   }
   private sortMenu(menu) {
     menu.forEach(elmt => {
@@ -95,7 +92,8 @@ export class SideNavOuterToolbarComponent implements OnInit {
     });
     menu.sort((a, b) => a.position - b.position);
   }
-  checkLeftMenu(id: Number) {
+  // check left elements on top menu click
+  checkLeftMenu(id: number) {
     let newLeftTable = [];
     newLeftTable = this.left.filter(elmt => elmt.menuParentId === id && elmt.menuType === MenuType.LEFT);
     this.menuItems = [...newLeftTable];
@@ -163,6 +161,9 @@ export class SideNavOuterToolbarComponent implements OnInit {
       this.temporaryMenuOpened = true;
       this.menuOpened = true;
     }
+  }
+  ngOnDestroy(){
+    localStorage.setItem('lastSelMenu', JSON.stringify(this.menuItems));
   }
 }
 
