@@ -1,4 +1,4 @@
-import {Component, OnInit, NgModule, Input, ViewChild, OnDestroy} from '@angular/core';
+import {Component, OnInit, NgModule, Input, ViewChild, OnDestroy, HostListener} from '@angular/core';
 import {SideNavigationMenuModule, HeaderModule, HeaderComponent} from '../../shared/components';
 import { ScreenService } from '../../shared/services';
 import { DxDrawerModule } from 'devextreme-angular/ui/drawer';
@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import {MenuService} from '../../common/services/menu.service';
 import {MenuType} from '../../common/types/menu-type';
+import {StorageService} from '../../shared/services/storage.service';
+import {NAV_STATE, NAV_STATE_CLICK} from '../../shared/storageItems';
 
 @Component({
   selector: 'app-side-nav-outer-toolbar',
@@ -24,6 +26,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
   menuOpened: boolean;
   temporaryMenuOpened = false;
+  openedTop;
 
 
 
@@ -37,10 +40,14 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   left: any[] = [];
   allMenus: any[] = [];
 
-  constructor(private screen: ScreenService, private menuService: MenuService, private router: Router) { }
+  constructor(private screen: ScreenService, private menuService: MenuService, private storageService: StorageService,
+              private router: Router) { }
 
   ngOnInit() {
     this.menuOpened = this.screen.sizes['screen-large'];
+    this.menuOpened = this.storageService.getSessionStorageItem(NAV_STATE) ? this.storageService.getSessionStorageItem(NAV_STATE) : false;
+    this.openedTop = this.storageService.getSessionStorageItem(NAV_STATE_CLICK) ?
+      this.storageService.getSessionStorageItem(NAV_STATE_CLICK) : 1;
 
     this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
@@ -61,6 +68,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
     this.updateDrawer();
   }
+
   fillMenuItems(menus) {
     this.left = [];
     this.topLeft = [];
@@ -82,7 +90,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     // Header Main Menu
     this.header.setMenu(this.topLeft);
     // Main Left Menu Items
-    this.menuItems = JSON.parse(localStorage.getItem('lastSelMenu'));
+    this.menuItems = [...this.left.filter(elmt => elmt.menuParentId == this.openedTop && elmt.menuType === MenuType.LEFT)];
   }
   private sortMenu(menu) {
     menu.forEach(elmt => {
@@ -93,7 +101,8 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     menu.sort((a, b) => a.position - b.position);
   }
   // check left elements on top menu click
-  checkLeftMenu(id: number) {
+  checkLeftMenu(id) {
+    this.openedTop = id;
     let newLeftTable = [];
     newLeftTable = this.left.filter(elmt => elmt.menuParentId === id && elmt.menuType === MenuType.LEFT);
     this.menuItems = [...newLeftTable];
@@ -115,6 +124,12 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
       }
     }
     this.router.navigate([data.item.path]);
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  beforeunloadHandler(event) {
+    this.storageService.setSessionStorageItem(NAV_STATE, this.menuOpened);
+    this.storageService.setSessionStorageItem(NAV_STATE_CLICK, this.openedTop);
   }
   updateDrawer() {
     const isXSmall = this.screen.sizes['screen-x-small'];
