@@ -1,10 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormField} from '../../../../ui/model/form-field';
 import {DataService} from '../../../services/data.service';
 import {Report} from '../../../models/report';
 import {Well} from '../../../models/well';
 import {WellService} from '../../../services/well.service';
-import {DxFormComponent} from 'devextreme-angular';
 import {Company} from '../../../models/company';
 import {Project} from '../../../models/project';
 import {Site} from '../../../models/site';
@@ -19,10 +17,6 @@ export class DailyDrillingComponent implements OnInit {
   // @ViewChild(DxFormComponent) myform: DxFormComponent;
   colNumber = 1;
   width = 600;
-  field: FormField = {
-    label: 'This a Field',
-
-  };
   msgErr = 'please fill this field';
   report: Report ;
   company: Company ;
