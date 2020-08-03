@@ -1,0 +1,47 @@
+<div id="form-demo">
+  <dx-tree-view
+    #treeview
+    [items]="projects"
+    displayExpr="name"
+    itemsExpr="sites"
+    [searchEnabled]="true"
+    searchMode="contains"
+    [focusStateEnabled]="true"
+    expandEvent="click"
+    (onItemClick)="selectItem($event)"
+  >
+
+  </dx-tree-view>
+
+  <div class="widget-container" id="well-details" *ngIf="selectedWell.name">
+    <h2 >Generate New Report Wizard</h2>
+
+    <dx-form  id="form"
+              showColonAfterLabel="true"
+              labelLocation="left"
+              itemtype="tabs"
+              [width]="width">
+      <dxi-item text="Company">
+        <dx-text-box
+          [(value)]="selectedWell.name" disabled="true"
+        >
+        </dx-text-box>
+      </dxi-item>
+      <dxi-item>
+        <dx-date-box
+          type="date"
+          text="Date"
+          [(value)]="report.date"></dx-date-box>
+      </dxi-item>
+      <dxi-item>
+        <span>Report Number</span>
+        <dx-number-box  [(value)]="report.id"></dx-number-box>
+      </dxi-item>
+      <dxi-item>
+        <span>Description</span>
+        <dx-text-area ></dx-text-area>
+      </dxi-item>
+    </dx-form>
+    <dx-button text="generate"  type="default" icon="check" (onClick)="onSumit($event)"></dx-button>
+  </div>
+</div>

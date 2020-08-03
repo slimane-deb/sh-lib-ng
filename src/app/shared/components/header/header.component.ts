@@ -41,8 +41,12 @@ export class HeaderComponent {
     },
     {
     text: 'Profile',
-    icon: 'user'
-  }, {
+    icon: 'user',
+    onClick: () => {
+        this.router.navigate(['/profile']);
+      }
+  },
+    {
     text: 'Logout',
     icon: 'runner',
     onClick: () => {
@@ -50,6 +54,8 @@ export class HeaderComponent {
     }
   }];
   topLeftMenu = [];
+  topRightMenu = [];
+
   showSubmenuModes: any;
   showFirstSubmenuModes: any;
   showFirstBigSubmenuModes: any;
@@ -78,8 +84,10 @@ export class HeaderComponent {
   toggleMenu = () => {
     this.menuToggle.emit();
   }
-  setMenu(menu: any[]) {
-    this.topLeftMenu = [...menu];
+  setMenu(menuL: any[], menuR: any[]) {
+    this.topLeftMenu = [...menuL];
+    this.topRightMenu = [...menuR];
+
   }
 }
 

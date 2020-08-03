@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Well} from '../models/well';
 const wells: Well[] = [{
-  id: 1,
-  companyId: 1,
+  id: '1',
+  companyId: '1',
   name: 'DLA-1Ter',
   address: {
     location: 'Hassi Messaoud',
@@ -10,8 +10,8 @@ const wells: Well[] = [{
     state: 'Ouargla'
   }
 }, {
-  id: 2,
-  companyId: 1,
+  id: '2',
+  companyId: '1',
   name: 'DMS-8',
   address: {
     location: 'Berkine',
@@ -28,7 +28,7 @@ export class WellService {
   getAll(): Well[]{
     return wells;
   }
-  getByCompanyId(coId: number): Well{
+  getById(coId: string): Well{
     return wells.find(x => x.companyId = coId);
   }
 }

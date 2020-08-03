@@ -1,1 +1,0 @@
-export {FormPersonnel} from './formPersonnel';

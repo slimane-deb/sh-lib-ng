@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {DxFormComponent} from 'devextreme-angular';
 import {FormType} from './formModel/formType';
 import {FormFile} from './formModel/formFile';
@@ -12,7 +12,7 @@ import {FormField} from './formModel/formField';
   templateUrl: './custom-form.component.html',
   styleUrls: ['custom-form.component.scss']
 })
-export class CustomFormComponent implements OnInit {
+export class CustomFormComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DxFormComponent) myform: DxFormComponent;
 
@@ -28,10 +28,9 @@ export class CustomFormComponent implements OnInit {
   @Input()
   handlerInstantition: object;
 
-  titleForm: string;
+  formTitle: string;
 
-  validationButton: string ;
-
+  validationButton;
   cancelButton: string;
   resetButton: string;
 
@@ -46,6 +45,9 @@ export class CustomFormComponent implements OnInit {
 
   @Output()
   displayTitle = new EventEmitter<any>();
+  invalidForm = false;
+  @Input()
+  actionsVisible = true;
 
 
   constructor(private formProvider: CustomFormService) {
@@ -54,44 +56,46 @@ export class CustomFormComponent implements OnInit {
     this.publishTitle = this.publishTitle.bind(this);
     this.generateDataToSend = this.generateDataToSend.bind(this);
     this.setAsynDatas = this.setAsynDatas.bind(this);
-    setTimeout(() => {
-      this.setDataToTable();
-    }, 0);
+
   }
+
 
   ngOnInit() {
-
+    this.setDataToTable();
   }
+  ngAfterViewInit(): void {
+    console.log(this.myform.instance.getEditor('formGroup'));
+    }
 
   setDataToTable() {
-    let  ii = 0; let j = 0;
+    let  k = 0; // sections counter
+    let j = 0; // elements/section counter
     const classForm = new (this.handlerInstantition as any)[this.classNameStr]();
     const attributeAccess = classForm.__proto__;
+    // form class fields
     const keys: string[] = this.getAttributeList(attributeAccess);
     const idx = keys.indexOf('headers');
     if (idx > -1) {
-      this.titleForm = attributeAccess.headers.title;
+      this.formTitle = attributeAccess.headers.title;
       this.validationButton = attributeAccess.headers.saveButton;
       this.cancelButton = attributeAccess.headers.cancelButton;
-      this.resetButton = attributeAccess.headers.resetButton;
+      // this.resetButton = attributeAccess.headers.resetButton;
+      // this.publishButton();
+      // this.publishTitle();
       keys.splice(idx, 1);
-      this.publishButton();
-      this.publishTitle();
     }
-    console.log(keys);
     let formFile: FormFile = null;
     let tabForm: FormField[] = [];
     let lastSection = false;
     for (let i = 0; i < keys.length; i++) {
       const elmt = keys[i];
-      console.log(attributeAccess[elmt]);
-      if ( attributeAccess[elmt] instanceof String) {
-        console.log('SECTION');
+      if (typeof attributeAccess[elmt] === 'string') { // Section is string field
+        // new Section in the form
         if (lastSection) {
           formFile.sectionElements = [...tabForm];
           this.formData.push({...formFile});
-          ii++;
-          j = 0;
+          k++;
+          j = 0; // reset counter
         }
         formFile = new FormFile(attributeAccess[elmt]);
         tabForm.length = 0;
@@ -100,11 +104,11 @@ export class CustomFormComponent implements OnInit {
         keys.splice(i, 1);
         i--;
       } else {
-        console.log('ELEMENTS');
         if (!lastSection) {
           formFile = new FormFile('');
           lastSection = true;
         }
+        // get fields value
         if (attributeAccess[elmt].type === FormType.SELECT) {
           if (!attributeAccess[elmt].datas.hostname) {
             if (attributeAccess[elmt].defaultValue) {
@@ -113,12 +117,11 @@ export class CustomFormComponent implements OnInit {
             else { attributeAccess[elmt].selected = -1; }
           }
           else {
-            this.setAsynDatas(attributeAccess[elmt], ii, j);
+            this.setAsynDatas(attributeAccess[elmt], k, j);
           }
         }
         if (attributeAccess[elmt].type === FormType.CHEKBOX) {
           attributeAccess[elmt].datas.forEach(val => val.selected = false);
-          // attributeAccess[elmt].defaultValue && attributeAccess[elmt].defaultValue.length &&
           attributeAccess[elmt].defaultValue.map(ind => {
             const taille = attributeAccess[elmt].datas.length;
             if ( ind > -1 && ind < taille ) { attributeAccess[elmt].datas[ind].selected = true; }
@@ -140,15 +143,15 @@ export class CustomFormComponent implements OnInit {
             attributeAccess[elmt].defaultValue = date;
           }
         }
+
         tabForm.push({...attributeAccess[elmt]});
         j++;
       }
-      this.keysClass = keys;
     }
+    this.keysClass = keys;
     formFile.sectionElements = [...tabForm];
     this.formData.push({...formFile});
-    ii++;
-    console.log(this.formData);
+    k++;
     if (this.formData.length < this.colNumber) {
       this.colNumber = this.formData.length;
     }
@@ -236,7 +239,9 @@ export class CustomFormComponent implements OnInit {
     return Object.keys(obj);
   }
 
-  publishButton() {
+  publishButton(event) {
+    // this.myform.instance.validate();
+    console.log(event);
     const btns: ActionButton[] = [];
     btns.push({
       title : this.validationButton,
@@ -244,13 +249,13 @@ export class CustomFormComponent implements OnInit {
       function : 'sendForm',
       items : []
     });
-    this.cancelButton && this.cancelButton !== '' && btns.push({
+    this.cancelButton && btns.push({
       title : this.cancelButton,
       items : [],
       type : 1,
       function : 'cancelSendForm'
     });
-    this.resetButton && this.resetButton !== '' && btns.push({
+    this.resetButton && btns.push({
       title : this.resetButton,
       items : [],
       type : 1,
@@ -261,7 +266,7 @@ export class CustomFormComponent implements OnInit {
 
   publishTitle() {
     const infos: TitleDesc = {
-      title : this.titleForm,
+      title : this.formTitle,
       description : ''
     };
     this.displayTitle.emit(infos);

@@ -16,6 +16,10 @@ export class UserPanelComponent {
 
   @Input()
   menuMode: string;
+  user = {
+    username: 'DSlimane',
+    email: 'slimane.deb@smartest.dz'
+  };
 
   constructor() {}
 }

@@ -1,0 +1,31 @@
+<div class="long-title">
+  <h3>survey data</h3>
+</div>
+<div id="form-container">
+  <dx-form id="form" #myform>
+    <dxi-item itemType="group" [colCount]="1" >
+      <dxi-item itemType="group" caption="Fill in data">
+        <dx-data-grid
+          id="gridContainer"
+          [dataSource]="dataSource"
+          [columnAutoWidth]="true"
+          [showBorders]="true"
+          [repaintChangesOnly]="true">
+
+          <dxo-paging [enabled]="false"></dxo-paging>
+          <dxo-editing
+            mode="batch"
+            [allowUpdating]="true"
+            [allowAdding]="true">
+          </dxo-editing>
+          <dxi-item *ngFor="let f of fields; index as i">
+            <dxi-column [caption]="f" dataField="f">
+              <dxi-validation-rule type="required"></dxi-validation-rule>
+            </dxi-column>
+          </dxi-item>
+        </dx-data-grid>
+      </dxi-item>
+
+    </dxi-item>
+  </dx-form>
+</div>

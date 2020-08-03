@@ -1,0 +1,62 @@
+<h2 class="content-block">DAILY DRILLING REPORTS</h2>
+
+<dx-data-grid class="dx-card wide-card"
+              keyExpr="id"
+              [hoverStateEnabled]="true"
+              [showBorders]="true"
+              [dataSource]="dataSource"
+              [columns]="columns"
+              [focusedRowEnabled]="true"
+              [focusedRowIndex]="0"
+              [columnAutoWidth]="true"
+              [columnHidingEnabled]="true"
+              (onRowRemoved)="updateReportInfo($event)">
+
+  <dxo-paging [pageSize]="20"></dxo-paging>
+  <dxo-pager [showPageSizeSelector]="true" [showInfo]="true" [allowedPageSizes]="[10, 20, 50]"></dxo-pager>
+  <dxo-filter-row [visible]="true"></dxo-filter-row>
+  <dxo-search-panel
+    [visible]="true"
+    [width]="240"
+    placeholder="Search..."></dxo-search-panel>
+  <dxo-editing
+    mode="row"
+    [allowUpdating]="true"
+    [allowDeleting]="true">
+  </dxo-editing>
+
+  <dxi-column
+    dataField="id"
+    caption="N°"
+    [width]="60"
+    [hidingPriority]="2">
+  </dxi-column>
+  <dxi-column
+    dataField="title"
+    [width]="300"
+    caption="Title"
+    [hidingPriority]="8">
+  </dxi-column>
+  <dxi-column
+    dataField="date"
+    caption="Date"
+    dataType="date"
+    [hidingPriority]="3">
+  </dxi-column>
+  <dxi-column
+    dataField="status"
+    caption="Status"
+    [hidingPriority]="6">
+  </dxi-column>
+  <dxi-column
+    dataField="creator"
+    caption="Creator"
+    [allowSorting]="false"
+    [hidingPriority]="7">
+  </dxi-column>
+  <dxi-column
+    dataField="progress"
+    caption="Progress"
+    [hidingPriority]="0">
+  </dxi-column>
+</dx-data-grid>

@@ -1,7 +1,7 @@
 import {Well} from './well';
 
 export class Site {
-  id: number;
+  id: string;
   name: string;
   wells: Well[];
 }

@@ -1,0 +1,72 @@
+@import 'src/assets/css/form';
+
+.widget-container dx-button{
+  float: right;
+  margin: 4px 0;
+}
+::ng-deep .widget-container {
+  //margin-right: 320px;
+  padding: 20px;
+  //max-width: 550px;
+  //min-width: 300px;
+}
+::ng-deep #form-demo{
+  display: flex;
+  //justify-content: center;
+  dx-tree-view {
+    padding: 0 20px;
+    margin-top: 20px;
+    flex-grow: 1;
+    box-shadow: -4px 4px 18px grey;
+  }
+  .widget-container{
+    flex-grow: 4;
+  }
+}
+::ng-deep #form {
+  margin-top: 20px;
+}
+::ng-deep #well-details {
+  //vertical-align: top;
+  //width: 400px;
+  //height: 420px;
+  //margin-left: 20px;
+}
+::ng-deep #well-details > img {
+  border: none;
+  height: 300px;
+  width: 400px;
+}
+::ng-deep #well-details > .name {
+  text-align: center;
+  font-size: 20px;
+}
+::ng-deep #well-details > .price {
+  text-align: center;
+  font-size: 24px;
+}
+::ng-deep .dark #well-details > div {
+  color: #f0f0f0;
+}
+::ng-deep .hidden {
+  visibility: hidden;
+}
+::ng-deep .options {
+  padding: 20px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 260px;
+  top: 0;
+  background-color: rgba(191, 191, 191, 0.15);
+}
+::ng-deep .caption {
+  font-size: 18px;
+  font-weight: 500;
+}
+::ng-deep.option {
+  margin-top: 10px;
+}
+::ng-deep #treeview {
+  //height: 400px;
+}

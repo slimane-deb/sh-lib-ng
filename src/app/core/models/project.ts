@@ -1,8 +1,10 @@
 import {Site} from './site';
 
 export class Project{
-  id: number;
+  id: string;
   name: string;
-  companyId: string;
-  sites: Site[];
+  def_mag_model?: string;
+  companyId?: string;
+  description?: string;
+  sites?: Site[];
 }

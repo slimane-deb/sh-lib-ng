@@ -1,4 +1,8 @@
 export class Report {
-  number: number;
+  id: number;
+  title: string;
   date: string;
+  status?: string;
+  progress?: number;
+  creator?: any;
 }

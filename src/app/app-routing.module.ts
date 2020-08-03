@@ -30,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: 'report',
-    loadChildren: () => import('./core/report/report.module').then(m => m.ReportModule)
+    loadChildren: () => import('./core/daily-drilling/daily-drilling.module').then(m => m.DailyDrillingModule)
   },
   // Other modules
   {

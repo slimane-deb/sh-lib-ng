@@ -5,7 +5,7 @@ import {Project} from '../models/project';
 import {Site} from '../models/site';
 const companies: Company[] = [
   {
-  id: 1,
+  id: '1',
   name: 'SONATRACH',
   address: {
    location: 'Cité Malki',
@@ -16,7 +16,7 @@ const companies: Company[] = [
   website: 'http://www.sonatrach.com'
 },
   {
-  id: 2,
+  id: '2',
   name: 'ENTP',
   address: {
     location: 'Hassi Berkine',
@@ -29,16 +29,18 @@ const companies: Company[] = [
 ];
 const projects: Project[] = [
   {
-    id: 1,
-    name: 'Oued Noumer',
+    id: 'l5VzvBSlPv',
+    name: 'IN AMENAS',
     companyId: '1',
+    def_mag_model : 'IGRF200510',
+    description : '',
     sites:  [
       {
-      id: 1,
+      id: '11',
       name: 'Ait Khir',
-        wells: [{
-          id: 1,
-          companyId: 1,
+      wells: [{
+          id: '111',
+          companyId: '1',
           name: 'DLA-1Ter',
           address: {
             location: 'Hassi Messaoud',
@@ -46,8 +48,8 @@ const projects: Project[] = [
             state: 'Ouargla'
           }
         }, {
-          id: 2,
-          companyId: 1,
+          id: '112',
+          companyId: '1',
           name: 'DMS-8',
           address: {
             location: 'Berkine',
@@ -58,7 +60,13 @@ const projects: Project[] = [
           ]
     }
     ]
-  }
+  },
+  {
+    id : 'eJUvp9t9cG',
+    name : 'HASSI MESSAOUD',
+    def_mag_model : 'WMM_2000',
+    description : ''
+  },
 ];
 
 @Injectable()

@@ -1,55 +1,78 @@
 <header>
-    <dx-toolbar class="header-toolbar">
-        <dxi-item
-            *ngIf="menuToggleEnabled"
-            location="before"
-            widget="dxButton"
-            cssClass="menu-button"
-            [options]="{
+  <dx-toolbar class="header-toolbar">
+    <!-- Menu Toggle     -->
+    <dxi-item
+      *ngIf="menuToggleEnabled"
+      location="before"
+      widget="dxButton"
+      cssClass="menu-button"
+      [options]="{
                 icon: 'menu',
                 stylingMode: 'text',
                 onClick: toggleMenu
             }">
-        </dxi-item>
-        <dxi-item
-            location="before"
-            cssClass="header-title"
-            *ngIf="title"
-            [text]="title">
-        </dxi-item>
-        <dxi-item
-            location="after"
-            locateInMenu="auto"
-            menuItemTemplate="menuItem">
-            <div *dxTemplate="let data of 'item'">
-                <dx-button
-                    class="user-button authorization"
-                    width="210px"
-                    height="100%"
-                    stylingMode="text">
-                    <div *dxTemplate="let data of 'content'">
-                        <app-user-panel [menuItems]="userMenuItems" menuMode="context"></app-user-panel>
-                    </div>
-                </dx-button>
-            </div>
-        </dxi-item>
-        <dxi-item
-        location="before"
-        locateInMenu="auto"
+    </dxi-item>
+    <!-- Company Title     -->
+    <dxi-item
+      location="before"
+      cssClass="header-title"
+      *ngIf="title"
+      [text]="title">
+    </dxi-item>
+    <!--  Top Right Menu -->
+    <dxi-item
+      location="after"
+      locateInMenu="auto"
+    >
+      <dx-menu
+        #menu
+        [dataSource]="topRightMenu"
+        displayExpr="title"
+        [showFirstSubmenuMode]="showFirstSubmenuModes"
+        orientation="horizontal"
+        submenuDirection="auto"
+        [hideSubmenuOnMouseLeave]="true"
+        (onItemClick)="menuItemClicked($event)"
       >
-        <dx-menu
-          id="bigMenu"
-          [dataSource]="topLeftMenu"
-          displayExpr="title"
-          orientation="horizontal"
-          submenuDirection="auto"
-          [hideSubmenuOnMouseLeave]="true"
-          (onItemClick) = "menuItemClicked($event)"
-        >
-        </dx-menu>
-      </dxi-item>
-        <div *dxTemplate="let data of 'menuItem'">
-            <app-user-panel [menuItems]="userMenuItems" menuMode="list"></app-user-panel>
-        </div>
-    </dx-toolbar>
+      </dx-menu>
+    </dxi-item>
+    <!-- Left Menu-->
+    <dxi-item
+      location="after"
+      locateInMenu="auto"
+      menuItemTemplate="menuItem">
+      <div *dxTemplate="let data of 'item'">
+        <dx-button
+          class="user-button authorization"
+          height="100%"
+          stylingMode="text">
+          <div *dxTemplate="let data of 'content'">
+            <app-user-panel [menuItems]="userMenuItems" menuMode="context"></app-user-panel>
+          </div>
+        </dx-button>
+      </div>
+    </dxi-item>
+    <!-- Top Left Menu-->
+    <dxi-item
+      location="before"
+      locateInMenu="auto"
+    >
+      <dx-menu
+        id="bigMenu"
+        [dataSource]="topLeftMenu"
+        displayExpr="title"
+        orientation="horizontal"
+        submenuDirection="auto"
+        [hideSubmenuOnMouseLeave]="true"
+        (onItemClick)="menuItemClicked($event)"
+      >
+      </dx-menu>
+    </dxi-item>
+
+
+    <!-- User Account -->
+    <div *dxTemplate="let data of 'menuItem'">
+      <app-user-panel [menuItems]="userMenuItems" menuMode="list"></app-user-panel>
+    </div>
+  </dx-toolbar>
 </header>

@@ -1,8 +1,8 @@
 import {Address} from './address';
 
 export class  Well {
-  id: number;
-  companyId: number;
+  id: string;
   name: string;
+  companyId: string;
   address: Address;
 }

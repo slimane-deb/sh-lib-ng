@@ -8,11 +8,14 @@ import { AuthService, ScreenService, AppInfoService } from './shared/services';
 import { AppRoutingModule } from './app-routing.module';
 import {MenuService} from './common/services/menu.service';
 import {HttpClientModule} from '@angular/common/http';
-import {ReportModule} from './core/report/report.module';
+import {DailyDrillingModule} from './core/daily-drilling/daily-drilling.module';
+import { BaseFormComponent } from './shared/components/base-form/base-form.component';
+import {CustomFormModule} from 'custom-form';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BaseFormComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +25,8 @@ import {ReportModule} from './core/report/report.module';
     LoginFormModule,
     AppRoutingModule,
     HttpClientModule,
-    ReportModule
+    DailyDrillingModule,
+    CustomFormModule
   ],
   providers: [AuthService, ScreenService, AppInfoService, MenuService],
   bootstrap: [AppComponent]

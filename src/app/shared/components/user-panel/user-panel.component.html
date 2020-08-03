@@ -3,14 +3,13 @@
         <div class="image-container">
             <div class="user-image"></div>
         </div>
-        <div class="user-name">slimane.deb@smartest.dz</div>
+        <div class="user-name">{{user.username}}</div>
     </div>
     <dx-context-menu
         *ngIf="menuMode === 'context'"
         [items]="menuItems"
         target=".user-button"
         showEvent="dxclick"
-        width="210px"
         [position]="{ my: 'top center', at: 'bottom center' }"
         cssClass="user-menu">
     </dx-context-menu>
