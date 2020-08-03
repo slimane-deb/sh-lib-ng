@@ -6,7 +6,7 @@ import {
   DxButtonModule,
   DxCheckBoxModule, DxDataGridModule, DxDateBoxModule,
   DxFormModule,
-  DxNumberBoxModule,
+  DxNumberBoxModule, DxPopupModule,
   DxRadioGroupModule,
   DxSelectBoxModule, DxTabPanelModule,
   DxTagBoxModule,
@@ -35,7 +35,10 @@ import { DailyNotesComponent } from './components/daily-notes/daily-notes.compon
     CustomFormModule,
     DxCheckBoxModule, DxFormModule, DxSelectBoxModule, DxTextAreaModule, DxRadioGroupModule,
     DxTextBoxModule, DxDateBoxModule, DxTagBoxModule, DxNumberBoxModule, DxValidatorModule,
-    DxValidationGroupModule, DxButtonModule, FormsModule, DxTabPanelModule, DxDataGridModule, DxTreeViewModule
+    DxValidationGroupModule, DxButtonModule, FormsModule, DxTabPanelModule, DxDataGridModule, DxTreeViewModule, DxPopupModule
+  ],
+  exports: [
+    DiagWellComponent
   ]
 })
 export class DailyDrillingModule { }

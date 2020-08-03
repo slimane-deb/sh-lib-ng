@@ -5,6 +5,7 @@
     (menuToggle)="menuOpened = !menuOpened;"
     (checkIfOpensLeftMenu)="checkLeftMenu($event)"
     (navigateComponent)="navigationToOtherComponent($event)"
+    (openPopup)="togglePopup($event)"
     [title]="title">
 </app-header>
 
@@ -38,3 +39,9 @@
         </div>
     </dx-scroll-view>
 </dx-drawer>
+
+<app-diag-well
+  [popupVisible]="popupVisible"
+  (popupClose)="togglePopup($event)">
+
+</app-diag-well>

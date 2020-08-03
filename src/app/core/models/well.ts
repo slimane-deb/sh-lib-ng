@@ -5,4 +5,6 @@ export class  Well {
   name: string;
   companyId: string;
   address: Address;
+  spud_date?: Date;
+  completion_well?: string;
 }

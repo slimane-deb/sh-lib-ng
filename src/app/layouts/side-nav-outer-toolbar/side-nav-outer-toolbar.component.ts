@@ -10,6 +10,7 @@ import {MenuService} from '../../common/services/menu.service';
 import {MenuType} from '../../common/types/menu-type';
 import {StorageService} from '../../shared/services/storage.service';
 import {NAV_STATE, NAV_STATE_CLICK} from '../../shared/storageItems';
+import {DailyDrillingModule} from '../../core/daily-drilling/daily-drilling.module';
 
 @Component({
   selector: 'app-side-nav-outer-toolbar',
@@ -40,12 +41,13 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   topRight: any[] = [];
   left: any[] = [];
   allMenus: any[] = [];
+  popupVisible = false;
 
   constructor(private screen: ScreenService, private menuService: MenuService, private storageService: StorageService,
               private router: Router) { }
 
   ngOnInit() {
-    this.menuOpened = this.screen.sizes['screen-large'];
+    // this.menuOpened = this.screen.sizes['screen-large'];
     this.menuOpened = this.storageService.getSessionStorageItem(NAV_STATE) ? this.storageService.getSessionStorageItem(NAV_STATE) : false;
     this.openedTop = this.storageService.getSessionStorageItem(NAV_STATE_CLICK) ?
       this.storageService.getSessionStorageItem(NAV_STATE_CLICK) : 1;
@@ -109,24 +111,24 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     this.openedTop = id;
     let newLeftTable = [];
     newLeftTable = this.left.filter(elmt => elmt.menuParentId === id && elmt.menuType === MenuType.LEFT);
-    // this.menuItems = [...newLeftTable];
+    this.menuItems = [...newLeftTable];
     if (newLeftTable.length > 0) {
       if (!this.menuOpened) { this.menuOpened = !this.menuOpened; }
       if (this.minMenuSize === 0 && !this.screen.sizes['screen-x-small']) { this.minMenuSize = 60; }
     } else { this.minMenuSize = 0; }
   }
   navigationToOtherComponent(menuItem: any) {
-    let idToTestWith = menuItem.item.menuParentId;
+/*    let idToTestWith = menuItem.item.menuParentId;
     if (menuItem.parent) {
       const element = this.allMenus.find(elmt => elmt.id === menuItem.item.menuParentId);
       if (element) { idToTestWith = element.menuParentId; }
     }
-    // if (this.menuItems[0].menuParentId !== idToTestWith) {
-    //   const newLeftTable = this.left;
-    //   if (newLeftTable.length > 0) {
-    //     this.menuItems = [...newLeftTable];
-    //   }
-    // }
+    if (this.menuItems[0].menuParentId !== idToTestWith) {
+      const newLeftTable = this.left;
+      if (newLeftTable.length > 0) {
+        this.menuItems = [...newLeftTable];
+      }
+    }*/
     this.router.navigate([menuItem.item.path]);
   }
 
@@ -184,10 +186,15 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
     // localStorage.setItem('lastSelMenu', JSON.stringify(this.menuItems));
   }
+
+  togglePopup(data: any) {
+    console.log(data);
+    this.popupVisible = !this.popupVisible;
+  }
 }
 
 @NgModule({
-  imports: [ SideNavigationMenuModule, DxDrawerModule, HeaderModule, DxScrollViewModule, CommonModule ],
+  imports: [SideNavigationMenuModule, DxDrawerModule, HeaderModule, DxScrollViewModule, CommonModule, DailyDrillingModule],
   exports: [ SideNavOuterToolbarComponent ],
   declarations: [ SideNavOuterToolbarComponent ]
 })

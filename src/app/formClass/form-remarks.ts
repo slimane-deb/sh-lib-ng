@@ -1,12 +1,8 @@
 import {FormDeco, FormHeader, SectionForm} from '../../../projects/custom-form/src/lib/formModel/decoratorForm';
 import {FormType} from '../../../projects/custom-form/src/lib/formModel/formType';
-@FormHeader({
-  title : 'daily notes',
-  saveButton: 'Save',
-  cancelButton: 'Cancel'
-})
+
 export class FormRemarks{
-  @SectionForm('remarks')
+  @SectionForm('')
   section;
 
   @FormDeco({
@@ -40,6 +36,4 @@ export class FormRemarks{
   })
   comment_general;
 
-  @SectionForm("DAILY NOTES")
-  section2;
 }

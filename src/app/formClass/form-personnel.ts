@@ -1,11 +1,8 @@
 import {FormDeco, FormHeader, FormType, SectionForm} from 'projects/custom-form/src/lib';
 
-@FormHeader({
-  title : 'Test form'
-})
 export class FormPersonnel {
 
-  @SectionForm('1')
+  @SectionForm('')
   section;
 
   @FormDeco({

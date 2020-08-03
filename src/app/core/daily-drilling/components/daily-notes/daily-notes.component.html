@@ -1,3 +1,59 @@
-<lib-custom-form classNameStr="{{formClass}}" colNumber="{{colNum}}" [handlerInstantition]="classInst"
-                 (displayButton)="updatedButtonsAction($event);">
-</lib-custom-form>
+<div class="long-title">
+  <h3>Daily Notes</h3>
+</div>
+<div id="form-container">
+  <dx-form id="form" #myform>
+    <dxi-item itemType="group" [colCount]="2" >
+      <dxi-item itemType="group" caption="Remarks">
+        <lib-custom-form classNameStr="{{formClass}}" colNumber="{{colNum}}" [actionsVisible]="false"
+                         [handlerInstantition]="classInst" (displayButton)="updatedButtonsAction($event);">
+        </lib-custom-form>
+      </dxi-item>
+      <dxi-item itemType="group" caption="Notes">
+        <dx-tab-panel
+        [dataSource]="notes"
+        [animationEnabled]="true"
+      >
+          <div *dxTemplate="let t of 'title'">
+            <span>{{t.PanelName}}</span>
+          </div>
+          <div *dxTemplate="let product of 'notesTab';">
+            <dx-data-grid #gridComponent
+              [dataSource]="product.data"
+              [columnAutoWidth]="true"
+              [showBorders]="true"
+              [repaintChangesOnly]="true">
+              <dxo-editing
+                mode="batch"
+                [allowUpdating]="true"
+                [allowAdding]="true">
+              </dxo-editing>
+
+              <dxi-column dataField="item"></dxi-column>
+            </dx-data-grid>
+          </div>
+
+      </dx-tab-panel>
+    </dxi-item>
+    </dxi-item>
+    <dxi-item itemType="group" colCount="1" cssClass="second-group">
+      <dx-button
+        stylingMode="default"
+        text="save"
+        icon="check"
+        type="default"
+        validationGroup="formGroup"
+        [useSubmitBehavior]="true"
+        (onClick)="sendForm($event)">
+      </dx-button>
+      <dx-button
+        stylingMode="contained"
+        text="clear"
+        validationGroup="formGroup"
+        (onClick)="myform.instance.resetValues()">
+      </dx-button>
+    </dxi-item>
+
+  </dx-form>
+</div>
+

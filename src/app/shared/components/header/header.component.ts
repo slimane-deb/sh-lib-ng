@@ -15,19 +15,18 @@ import {Router} from "@angular/router";
 })
 
 export class HeaderComponent {
-  @Output()
-  menuToggle = new EventEmitter<boolean>();
-
-  @Input()
-  menuToggleEnabled = false;
 
   @Input()
   title: string;
+  @Input()
+  menuToggleEnabled = false;
 
+  @Output()
+  menuToggle = new EventEmitter<boolean>();
   @Output()
   checkIfOpensLeftMenu = new EventEmitter<Number>();
   @Output()
-  goBackDefaultMenu = new EventEmitter<any>();
+  openPopup = new EventEmitter<any>();
   @Output()
   navigateComponent = new EventEmitter<Object>();
 
@@ -72,13 +71,16 @@ export class HeaderComponent {
     this.showFirstSubmenuModes = this.showSubmenuModes[1];
   }
   menuItemClicked(event) {
-    if (event.itemData.path && event.itemData.path !== 'defaultRightMenu') {
+    if (event.itemData.path) {
       const dataComp = {item : event.itemData, parent : !!event.itemData.menuParentId};
       this.navigateComponent.emit(dataComp);
     } else {
-      if (event.itemData.path === 'defaultRightMenu') { this.goBackDefaultMenu.emit(); } else {
         this.checkIfOpensLeftMenu.emit(event.itemData.menuId);
-      }
+    }
+  }
+  popupMenuClick(event){
+    if (event.itemData.path === 'defaultPopup'){
+      this.openPopup.emit(event.itemData);
     }
   }
   toggleMenu = () => {

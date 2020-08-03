@@ -12,7 +12,6 @@ export class BitBhaMdComponent implements OnInit {
 
   @ViewChild(CustomFormComponent) dynamicForm: CustomFormComponent;
 
-  title = 'testForm';
   classInst = classInstance;
   formClass = 'FormPersonnel';
   colNum = 2;

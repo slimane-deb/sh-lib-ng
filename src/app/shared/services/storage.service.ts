@@ -7,11 +7,11 @@ export class StorageService {
 
   constructor() { }
   /// SESSION STORAGE
-  setSessionStorageItem(identifer : string, item:  any) {
-    sessionStorage.setItem(identifer,JSON.stringify(item));
+  setSessionStorageItem(identifer: string, item: any) {
+    sessionStorage.setItem(identifer, JSON.stringify(item));
   }
 
-  getSessionStorageItem(identifier : string) {
+  getSessionStorageItem(identifier: string) {
     return sessionStorage.getItem(identifier) ? JSON.parse(sessionStorage.getItem(identifier)) : null;
   }
 }

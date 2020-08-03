@@ -1,1 +1,29 @@
-<p>diag-well works!</p>
+<dx-popup
+  [width]="660"
+  [height]="540"
+  [showTitle]="true"
+  [title]="currentWell.name"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  (onHiding)="closeEvent($event)"
+  [(visible)]="popupVisible">
+  <div *dxTemplate="let data of 'content'">
+    <div class='popup-property-details'>
+      <div class='large-text'>{{currentWell.spud_date | date:'yyyy-MM-dd'}}</div>
+      <div class='opacity'>{{currentWell.address.location}}, {{currentWell.address.city}}, {{currentWell.address.state}}</div>
+      <dx-button
+        class="favorites"
+        [text]="currentWell.completion_well ? REMOVE_FROM_DEV : ADD_TO_DEV"
+        icon="selectall"
+        [width]="260"
+        [height]="44"
+        (onClick)="changeDevState($event)">
+      </dx-button>
+      <div class='well-info'>
+        <p> Maybe image for {{currentWell.name}} </p>
+        <p>Just Text to add</p>
+      </div>
+      <div>{{currentWell.id}}</div>
+    </div>
+  </div>
+</dx-popup>

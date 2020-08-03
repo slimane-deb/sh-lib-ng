@@ -20,7 +20,7 @@ export class CustomFormComponent implements OnInit, AfterViewInit {
   classNameStr: string;
 
   @Input()
-  colNumber = 2;
+  colNumber;
 
   @Input()
   width: number = null;

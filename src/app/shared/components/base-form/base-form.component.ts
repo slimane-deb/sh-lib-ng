@@ -15,7 +15,7 @@ export class BaseFormComponent implements OnInit {
 
   classInst ;
   formClass ;
-  colNum ;
+  colNum =  2 ;
   actionBtn: ActionButton[];
   constructor() { }
 
@@ -23,14 +23,16 @@ export class BaseFormComponent implements OnInit {
   }
   updatedButtonsAction(data: ActionButton[]) {
     this.actionBtn = data;
-    notify('Form Saved');
 
   }
   sendForm(e) {
-    const obj: any = Utils.mapFormDeco(this.myForm.generateDataToSend()) ;
-    const dateCreation = DateUtils.format(new Date(), 'dd/MM/yyyy');
-    const buttonText = e.component.option('text');
-    notify('Form Saved');
+    // e.preventDefault();
+    if (this.myForm.myform.instance.validate().isValid) {
+      const obj: any = Utils.mapFormDeco(this.myForm.generateDataToSend());
+      const dateCreation = DateUtils.format(new Date(), 'dd/MM/yyyy');
+      const buttonText = e.component.option('text');
+      notify('Form Saved');
+    }
 
 
   }
