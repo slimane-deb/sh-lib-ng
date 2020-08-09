@@ -3,9 +3,10 @@
 </div>
 <div id="form-container">
   <dx-form id="form" #myform>
-    <dxi-item itemType="group" [colCount]="2" >
+    <dxi-item itemType="group" [colCount]="2">
       <dxi-item itemType="group" caption="BIT DATA">
-        <lib-custom-form classNameStr="{{formClass}}" colNumber="{{colNum}}" [actionsVisible]="false" [handlerInstantition]="classInst" ></lib-custom-form>
+        <lib-custom-form classNameStr="{{formClass}}" colNumber="{{colNum}}" [actionsVisible]="false"
+                         [handlerInstantition]="classInst"></lib-custom-form>
       </dxi-item>
       <dxi-item itemType="group" caption="LAST BHA">
         <dx-data-grid
@@ -37,17 +38,30 @@
         </dx-data-grid>
       </dxi-item>
       <dxi-item itemType="group" caption="MUD CHECKS">
-        <dxi-item itemType="tabbed" [tabPanelOptions]="{ deferRendering: false }">
-          <dxi-tab title="Phone">
-            <dxi-item dataField="Phone"></dxi-item>
-          </dxi-tab>
-          <dxi-tab title="Skype">
-            <dxi-item dataField="Skype"></dxi-item>
-          </dxi-tab>
-          <dxi-tab title="Email">
-            <dxi-item dataField="Email"></dxi-item>
-          </dxi-tab>
-        </dxi-item>
+        <dx-tab-panel
+          [dataSource]="mudChecks"
+          [animationEnabled]="true"
+        >
+          <div *dxTemplate="let t of 'title'">
+            <span>{{t.PanelName}}</span>
+          </div>
+          <div *dxTemplate="let product of 'mudTabs';">
+            <dx-data-grid #gridComponent
+                          [dataSource]="product.data"
+                          [columnAutoWidth]="true"
+                          [showBorders]="true"
+                          [repaintChangesOnly]="true">
+              <dxo-editing
+                mode="batch"
+                [allowUpdating]="true"
+                [allowAdding]="true">
+              </dxo-editing>
+
+              <dxi-column dataField="item"></dxi-column>
+            </dx-data-grid>
+          </div>
+
+        </dx-tab-panel>
       </dxi-item>
     </dxi-item>
     <dxi-item itemType="group" colCount="1" cssClass="second-group">

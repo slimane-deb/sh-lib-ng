@@ -17,8 +17,8 @@ export class DiagWellComponent implements OnInit {
   popupVisible;
   @Output()
   popupClose: EventEmitter<boolean> = new EventEmitter<boolean>();
-  ADD_TO_DEV = 'Add to Dev';
-  REMOVE_FROM_DEV = 'Remove from Dev';
+  GENERATE = 'Generate Report';
+  GENERATING = 'Generating';
 
   constructor(wellService: WellService) {
     this.wells = wellService.getAll();
@@ -27,11 +27,10 @@ export class DiagWellComponent implements OnInit {
 
   ngOnInit() {
   }
-  changeDevState($event) {
+  changeReportState($event) {
     const devState = this.currentWell.completion_well;
-    const message = 'This item has been '
-      + (devState ? 'added to' : 'removed from')
-      + ' the Favorites list!';
+    const message = 'The current report is  '
+      + (devState ? 'generated' : ' not fully completed');
     this.currentWell.completion_well = devState;
 
     notify({

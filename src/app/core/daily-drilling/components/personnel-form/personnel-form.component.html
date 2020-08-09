@@ -14,9 +14,11 @@
 
         <dxo-paging [enabled]="false"></dxo-paging>
         <dxo-editing
-          mode="batch"
+          mode="row"
           [allowUpdating]="true"
-          [allowAdding]="true">
+          [allowAdding]="true"
+          [allowDeleting]="true"
+        >
         </dxo-editing>
 
         <dxi-item *ngFor="let f of fields; index as i">

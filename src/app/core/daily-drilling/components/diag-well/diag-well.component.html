@@ -13,11 +13,11 @@
       <div class='opacity'>{{currentWell.address.location}}, {{currentWell.address.city}}, {{currentWell.address.state}}</div>
       <dx-button
         class="favorites"
-        [text]="currentWell.completion_well ? REMOVE_FROM_DEV : ADD_TO_DEV"
+        [text]="currentWell.completion_well ? GENERATING : GENERATE"
         icon="selectall"
         [width]="260"
         [height]="44"
-        (onClick)="changeDevState($event)">
+        (onClick)="changeReportState($event)">
       </dx-button>
       <div class='well-info'>
         <p> Maybe image for {{currentWell.name}} </p>

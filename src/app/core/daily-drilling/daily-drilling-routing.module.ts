@@ -9,6 +9,7 @@ import {DdrListComponent} from './components/ddr-list/ddr-list.component';
 import {OpsSummaryComponent} from './components/ops-summary/ops-summary.component';
 import {SurveyDataComponent} from './components/survey-data/survey-data.component';
 import {DailyNotesComponent} from './components/daily-notes/daily-notes.component';
+import {MudInventoryComponent} from './components/mud-inventory/mud-inventory.component';
 
 
 const routes: Routes = [
@@ -48,6 +49,10 @@ const routes: Routes = [
   {
     path: 'notes',
     component: DailyNotesComponent
+  },
+  {
+    path: 'mud-inventory',
+    component: MudInventoryComponent
   },
 
 

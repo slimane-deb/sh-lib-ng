@@ -25,10 +25,11 @@ import {DailyDrillingNewComponent} from './components/daily-drilling-new/daily-d
 import { SurveyDataComponent } from './components/survey-data/survey-data.component';
 import { DiagWellComponent } from './components/diag-well/diag-well.component';
 import { DailyNotesComponent } from './components/daily-notes/daily-notes.component';
+import { MudInventoryComponent } from './components/mud-inventory/mud-inventory.component';
 
 
 @NgModule({
-  declarations: [DailyReportAddComponent, DailyDrillingNewComponent, BitBhaMdComponent, PersonnelFormComponent, DailyHeaderComponent, DdrListComponent, OpsSummaryComponent, SurveyDataComponent, DiagWellComponent, DailyNotesComponent],
+  declarations: [DailyReportAddComponent, DailyDrillingNewComponent, BitBhaMdComponent, PersonnelFormComponent, DailyHeaderComponent, DdrListComponent, OpsSummaryComponent, SurveyDataComponent, DiagWellComponent, DailyNotesComponent, MudInventoryComponent],
   imports: [
     CommonModule,
     DailyDrillingRoutingModule,
