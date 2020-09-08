@@ -4,3 +4,8 @@ Choose predefined themes, or you can use the DevExtreme ThemeBuilder to create c
 
 ````
 npm run build-themes
+````
+
+#Using *dxTemplate
+The dxTemplate attribute directive cannot be used on custom markup elements.
+
